@@ -1,0 +1,16 @@
+# ── Core ──────────────────────────────────────────
+streamlit>=1.32.0
+pandas>=2.1.0
+numpy>=1.26.0
+plotly>=5.18.0
+faker>=22.0.0
+GoogleNews>=1.6.14
+textblob>=0.18.0
+
+# ── Fase 2: Omni-Channel & Geo-Inteligência ──────
+openai-whisper>=20231117       # Transcrição de Rádio/TV
+easyocr>=1.7.0                 # OCR para prints de WhatsApp
+opencv-python-headless>=4.9.0  # Processamento de imagem (headless p/ servidor)
+google-generativeai>=0.5.0     # Motor do Spin Doctor (Gemini)
+folium>=0.16.0                 # Mapas interativos (fallback)
+streamlit-folium>=0.18.0       # Integração Folium → Streamlit

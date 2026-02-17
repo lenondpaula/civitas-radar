@@ -509,6 +509,27 @@ def _gerar_css_tema(t: dict) -> str:
         border: 1px solid {t['border']}; border-radius: 10px;
         padding: 1rem 1.2rem; margin-bottom: 1rem;
     }}
+
+    /* ═══ VOZ DAS RUAS — scroll sincronizado com notícias ═══ */
+    .social-feed-scroll {{
+        max-height: 520px;
+        overflow-y: auto;
+        padding-right: 4px;
+    }}
+    .social-feed-scroll::-webkit-scrollbar {{
+        width: 5px;
+    }}
+    .social-feed-scroll::-webkit-scrollbar-track {{
+        background: {t['bg_card']};
+        border-radius: 4px;
+    }}
+    .social-feed-scroll::-webkit-scrollbar-thumb {{
+        background: {t['border']};
+        border-radius: 4px;
+    }}
+    .social-feed-scroll::-webkit-scrollbar-thumb:hover {{
+        background: {t['text_muted']};
+    }}
     </style>
     """
 
@@ -784,43 +805,42 @@ with tab_radar:
     with col_news:
         st.markdown(f"#### {T['intel_imprensa']}")
         if noticias:
+            news_cards_html = ""
             for n in noticias:
                 link_html = (
                     f'<a href="{n["link"]}" target="_blank" style="color:#e94560;text-decoration:none;">Abrir ↗</a>'
                     if n["link"] != "#"
                     else ""
                 )
-                st.markdown(
-                    f"""
-                    <div class="news-card">
-                        <h4>{n['titulo']}</h4>
-                        <small>📅 {n['data']}  •  🏢 {n['fonte']}  {link_html}</small>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+                news_cards_html += f"""
+                <div class="news-card">
+                    <h4>{n['titulo']}</h4>
+                    <small>📅 {n['data']}  •  🏢 {n['fonte']}  {link_html}</small>
+                </div>
+                """
+            st.markdown(news_cards_html, unsafe_allow_html=True)
         else:
             st.warning(T["nenhuma_noticia"])
 
     with col_social:
         st.markdown(f"#### {T['intel_ruas']}")
         icone_sentimento = {"Positivo": "🟢", "Negativo": "🔴", "Neutro": "⚪"}
+        social_cards_html = '<div class="social-feed-scroll">'
         for _, row in df.head(15).iterrows():
             classe = row["Sentimento"].lower()
             icone = icone_sentimento.get(row["Sentimento"], "⚪")
-            st.markdown(
-                f"""
-                <div class="comment-row {classe}">
-                    <strong>{row['Usuario']}</strong>
-                    <span style="float:right;font-size:0.8rem;color:#718096">{row['Plataforma']}</span>
-                    <br/>
-                    <span style="color:#e2e8f0">{icone} {row['Texto']}</span>
-                    <br/>
-                    <small style="color:#4a5568">{row['Data'].strftime('%d/%m %H:%M')} • {row['Bairro']}</small>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+            social_cards_html += f"""
+            <div class="comment-row {classe}">
+                <strong>{row['Usuario']}</strong>
+                <span style="float:right;font-size:0.8rem;color:#718096">{row['Plataforma']}</span>
+                <br/>
+                <span style="color:#e2e8f0">{icone} {row['Texto']}</span>
+                <br/>
+                <small style="color:#4a5568">{row['Data'].strftime('%d/%m %H:%M')} • {row['Bairro']}</small>
+            </div>
+            """
+        social_cards_html += '</div>'
+        st.markdown(social_cards_html, unsafe_allow_html=True)
 
     st.divider()
 

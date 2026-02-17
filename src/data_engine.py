@@ -892,35 +892,35 @@ def _normalizar_data_google(data_str: str) -> str:
 
 def _limpar_link_google(link_raw: str) -> str:
     """
-    Extrai a URL real do redirect do Google News.
-    Links vêm no formato: ./articles/CBMi... ou https://news.google.com/rss/articles/...
-    Tenta resolver via GoogleNews.get_full_link() caso disponível, senão retorna a fonte.
+    Extrai a URL real do redirect do Google News e remove parâmetros
+    de rastreamento do Google (ved, usg, âncoras como #google_vignette).
     """
     import re as _re
 
     if not link_raw or link_raw == "#":
         return "#"
 
-    # Se já for um link direto para o veículo
-    if link_raw.startswith("http") and "news.google" not in link_raw and "/articles/" not in link_raw:
-        return link_raw
-
     # Tenta extrair a URL real dos parâmetros de redirect
     match = _re.search(r'url=(https?://[^&]+)', link_raw)
     if match:
-        return match.group(1)
+        link_raw = match.group(1)
 
-    # Para links relativos do GoogleNews (./articles/...) — construir URL de busca
-    # A lib GoogleNews retorna links relativos; precisamos prefixar
+    # Para links relativos do GoogleNews (./articles/...) — construir URL
     if link_raw.startswith("./"):
         link_raw = "https://news.google.com" + link_raw[1:]
 
-    # Se tem /articles/ mas não conseguimos extrair, retornamos o link do Google
-    if "/articles/" in link_raw and link_raw.startswith("http"):
-        return link_raw
+    # Se não é HTTP, desistir
+    if not link_raw.startswith("http"):
+        return "#"
 
-    # Último recurso
-    return link_raw if link_raw.startswith("http") else "#"
+    # ── Remover parâmetros de rastreamento do Google ──────────
+    # Remover fragmentos de rastreamento (#google_vignette, etc.)
+    link_raw = _re.sub(r'#google[_\w]*$', '', link_raw)
+    # Remover &ved=... e &usg=... (colados no path sem '?')
+    link_raw = _re.sub(r'[&?]ved=[^&]*', '', link_raw)
+    link_raw = _re.sub(r'[&?]usg=[^&]*', '', link_raw)
+
+    return link_raw
 
 
 def buscar_noticias_google(termo: str, qtd: int = 5) -> List[Dict[str, str]]:

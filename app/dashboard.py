@@ -7,6 +7,7 @@ Executar:  streamlit run app/dashboard.py
 
 from __future__ import annotations
 
+import html as _html
 import sys
 from pathlib import Path
 
@@ -822,15 +823,18 @@ with tab_radar:
         if noticias:
             news_cards_html = ""
             for n in noticias:
+                titulo_safe = _html.escape(str(n['titulo']))
+                fonte_safe = _html.escape(str(n['fonte']))
+                data_safe = _html.escape(str(n['data']))
                 link_html = (
-                    f'<a href="{n["link"]}" target="_blank" style="color:#e94560;text-decoration:none;">Abrir ↗</a>'
+                    f'<a href="{n["link"]}" target="_blank" style="color:{tema_atual["accent"]};text-decoration:none;">Abrir ↗</a>'
                     if n["link"] != "#"
                     else ""
                 )
                 news_cards_html += f"""
                 <div class="news-card">
-                    <h4>{n['titulo']}</h4>
-                    <small>📅 {n['data']}  •  🏢 {n['fonte']}  {link_html}</small>
+                    <h4>{titulo_safe}</h4>
+                    <small>📅 {data_safe}  •  🏢 {fonte_safe}  {link_html}</small>
                 </div>
                 """
             st.markdown(news_cards_html, unsafe_allow_html=True)
@@ -844,14 +848,18 @@ with tab_radar:
         for _, row in df.head(15).iterrows():
             classe = row["Sentimento"].lower()
             icone = icone_sentimento.get(row["Sentimento"], "⚪")
+            texto_safe = _html.escape(str(row['Texto']))
+            usuario_safe = _html.escape(str(row['Usuario']))
+            plataforma_safe = _html.escape(str(row['Plataforma']))
+            bairro_safe = _html.escape(str(row['Bairro']))
             social_cards_html += f"""
             <div class="comment-row {classe}">
-                <strong>{row['Usuario']}</strong>
-                <span style="float:right;font-size:0.8rem;color:#718096">{row['Plataforma']}</span>
+                <strong>{usuario_safe}</strong>
+                <span style="float:right;font-size:0.8rem;color:{tema_atual['text_muted']}">{plataforma_safe}</span>
                 <br/>
-                <span style="color:#e2e8f0">{icone} {row['Texto']}</span>
+                <span style="color:{tema_atual['text_primary']}">{icone} {texto_safe}</span>
                 <br/>
-                <small style="color:#4a5568">{row['Data'].strftime('%d/%m %H:%M')} • {row['Bairro']}</small>
+                <small style="color:{tema_atual['text_muted']}">{row['Data'].strftime('%d/%m %H:%M')} • {bairro_safe}</small>
             </div>
             """
         social_cards_html += '</div>'
@@ -865,44 +873,50 @@ with tab_radar:
     with col_radio:
         st.markdown(f"#### {T['radio_tv']}")
         if df_radio is not None and not df_radio.empty:
+            radio_html = ""
             for _, row in df_radio.head(10).iterrows():
                 sent_icon = {"Positivo": "🟢", "Negativo": "🔴", "Neutro": "⚪"}.get(row["Sentimento"], "⚪")
                 tipo_icon = "📺" if row["Tipo"] == "TV" else "📻"
-                st.markdown(
-                    f"""
-                    <div class="news-card">
-                        <h4>{tipo_icon} {row['Emissora']} <span style="float:right">{sent_icon}</span></h4>
-                        <small style="color:#e2e8f0">"{row['Transcricao']}"</small><br/>
-                        <small>🕐 {row['Timestamp'].strftime('%d/%m %H:%M')} • {row['Bairro']}</small>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+                emissora_safe = _html.escape(str(row['Emissora']))
+                transcricao_safe = _html.escape(str(row['Transcricao']))
+                bairro_safe = _html.escape(str(row['Bairro']))
+                radio_html += f"""
+                <div class="news-card">
+                    <h4>{tipo_icon} {emissora_safe} <span style="float:right">{sent_icon}</span></h4>
+                    <small style="color:{tema_atual['text_primary']}">"{transcricao_safe}"</small><br/>
+                    <small>🕐 {row['Timestamp'].strftime('%d/%m %H:%M')} • {bairro_safe}</small>
+                </div>
+                """
+            st.markdown(radio_html, unsafe_allow_html=True)
         else:
             st.info(T["nenhuma_transcricao"])
 
     with col_wpp:
         st.markdown(f"#### {T['dark_social']}")
         if df_wpp is not None and not df_wpp.empty:
+            wpp_html = ""
             for _, row in df_wpp.head(10).iterrows():
                 sent_icon = {"Positivo": "🟢", "Negativo": "🔴", "Neutro": "⚪"}.get(row["Sentimento"], "⚪")
+                viralidade_safe = _html.escape(str(row['Viralidade']))
                 viral_badge = (
-                    f'<span style="color:#fc8181;font-weight:700;"> {row["Viralidade"]}</span>'
+                    f'<span style="color:{tema_atual["accent"]};font-weight:700;"> {viralidade_safe}</span>'
                     if row["Viralidade"] != "—"
                     else ""
                 )
-                st.markdown(
-                    f"""
-                    <div class="comment-row {row['Sentimento'].lower()}">
-                        <strong>📱 {row['Grupo']}</strong>{viral_badge}
-                        <br/>
-                        <span style="color:#e2e8f0">{sent_icon} {row['Mensagem']}</span>
-                        <br/>
-                        <small style="color:#4a5568">{row['Remetente']} • {row['Timestamp'].strftime('%d/%m %H:%M')} • {row['Bairro']}</small>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
+                grupo_safe = _html.escape(str(row['Grupo']))
+                msg_safe = _html.escape(str(row['Mensagem']))
+                remetente_safe = _html.escape(str(row['Remetente']))
+                bairro_safe = _html.escape(str(row['Bairro']))
+                wpp_html += f"""
+                <div class="comment-row {row['Sentimento'].lower()}">
+                    <strong>📱 {grupo_safe}</strong>{viral_badge}
+                    <br/>
+                    <span style="color:{tema_atual['text_primary']}">{sent_icon} {msg_safe}</span>
+                    <br/>
+                    <small style="color:{tema_atual['text_muted']}">{remetente_safe} • {row['Timestamp'].strftime('%d/%m %H:%M')} • {bairro_safe}</small>
+                </div>
+                """
+            st.markdown(wpp_html, unsafe_allow_html=True)
         else:
             st.info(T["nenhuma_msg"])
 
@@ -974,11 +988,12 @@ with tab_mapa:
         st.markdown(f"##### {T['regioes_criticas']}")
         for _, row in bairro_sentimento.head(5).iterrows():
             cor = "#fc8181" if row["Aprovação"] < 40 else "#f6e05e" if row["Aprovação"] < 60 else "#48bb78"
+            bairro_safe = _html.escape(str(row['Bairro']))
             st.markdown(
                 f"""
-                <div style="background:#1a1a2e;padding:0.6rem;margin-bottom:0.4rem;border-radius:6px;
+                <div style="background:{tema_atual['bg_card']};padding:0.6rem;margin-bottom:0.4rem;border-radius:6px;
                             border-left:3px solid {cor};">
-                    <strong style="color:#e2e8f0">{row['Bairro']}</strong><br/>
+                    <strong style="color:{tema_atual['text_primary']}">{bairro_safe}</strong><br/>
                     <small style="color:{cor}">{T['aprovacao']}: {row['Aprovação']}% • {int(row['Menções'])} {T['mencoes']}</small>
                 </div>
                 """,
@@ -988,11 +1003,12 @@ with tab_mapa:
         st.markdown(f"##### {T['regioes_favoraveis']}")
         for _, row in bairro_sentimento.tail(5).iloc[::-1].iterrows():
             cor = "#48bb78" if row["Aprovação"] >= 60 else "#f6e05e" if row["Aprovação"] >= 40 else "#fc8181"
+            bairro_safe = _html.escape(str(row['Bairro']))
             st.markdown(
                 f"""
-                <div style="background:#1a1a2e;padding:0.6rem;margin-bottom:0.4rem;border-radius:6px;
+                <div style="background:{tema_atual['bg_card']};padding:0.6rem;margin-bottom:0.4rem;border-radius:6px;
                             border-left:3px solid {cor};">
-                    <strong style="color:#e2e8f0">{row['Bairro']}</strong><br/>
+                    <strong style="color:{tema_atual['text_primary']}">{bairro_safe}</strong><br/>
                     <small style="color:{cor}">{T['aprovacao']}: {row['Aprovação']}% • {int(row['Menções'])} {T['mencoes']}</small>
                 </div>
                 """,
@@ -1074,12 +1090,13 @@ with tab_comando:
         )
 
         texto_selecionado = items_negativos.iloc[selecionado_idx]["Conteúdo"]
+        texto_sel_safe = _html.escape(str(texto_selecionado))
 
         st.markdown(
             f"""
-            <div class="news-card" style="border-left-color:#fc8181;">
-                <h4 style="color:#fc8181;">{T['mencao_selecionada']}</h4>
-                <span style="color:#e2e8f0">{texto_selecionado}</span>
+            <div class="news-card" style="border-left-color:{tema_atual['accent']};">
+                <h4 style="color:{tema_atual['accent']};">{T['mencao_selecionada']}</h4>
+                <span style="color:{tema_atual['text_primary']}">{texto_sel_safe}</span>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1112,17 +1129,18 @@ with tab_comando:
             emoji_tom = TONS_RESPOSTA[resultado["tom"]]["emoji"]
             fonte_badge = "🤖 Gemini" if resultado["fonte"] == "gemini" else "📋 Template"
 
+            nota_safe = _html.escape(str(resultado['nota']))
             st.markdown(
                 f"""
-                <div style="background:#1a1a2e;padding:1.2rem;border-radius:10px;
-                            border:1px solid #2d3748;margin-top:1rem;">
+                <div style="background:{tema_atual['bg_card']};padding:1.2rem;border-radius:10px;
+                            border:1px solid {tema_atual['border']};margin-top:1rem;">
                     <div style="display:flex;justify-content:space-between;margin-bottom:0.8rem;">
-                        <span style="color:#e94560;font-weight:700;font-size:1rem;">
+                        <span style="color:{tema_atual['accent']};font-weight:700;font-size:1rem;">
                             {emoji_tom} {T['nota_estrategica']} {resultado['tom']}
                         </span>
-                        <span style="color:#718096;font-size:0.8rem;">{fonte_badge}</span>
+                        <span style="color:{tema_atual['text_muted']};font-size:0.8rem;">{fonte_badge}</span>
                     </div>
-                    <div style="color:#e2e8f0;line-height:1.7;white-space:pre-wrap;">{resultado['nota']}</div>
+                    <div style="color:{tema_atual['text_primary']};line-height:1.7;white-space:pre-wrap;">{nota_safe}</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -1142,20 +1160,20 @@ with tab_comando:
 # ══════════════════════════════════════════════════════════════
 st.markdown("---")
 st.markdown(
-    """
+    f"""
     <div class="footer-container">
         <div class="footer-title">
             🎯 Civitas-Radar | Inteligência Política em Tempo Real
         </div>
-        <div style="font-size: 0.9rem; margin-bottom: 1rem; font-style: italic; color: #8892b0;">
+        <div style="font-size: 0.9rem; margin-bottom: 1rem; font-style: italic; color: {tema_atual['text_muted']};">
             Monitoramento de Reputação Digital — War Room Dashboard
         </div>
-        <div style="margin-bottom: 1rem; color: #8892b0;">
+        <div style="margin-bottom: 1rem; color: {tema_atual['text_muted']};">
             Streamlit + Python + Plotly + GoogleNews + TextBlob
         </div>
-        <div style="border-top: 1px solid #2d3748; padding-top: 1rem; margin-top: 1rem;">
-            <div style="font-weight: 600; color: #e94560; margin-bottom: 0.5rem;">Lenon de Paula</div>
-            <div style="font-size: 0.85rem; color: #8892b0; margin-bottom: 0.75rem;">
+        <div style="border-top: 1px solid {tema_atual['border']}; padding-top: 1rem; margin-top: 1rem;">
+            <div style="font-weight: 600; color: {tema_atual['accent']}; margin-bottom: 0.5rem;">Lenon de Paula</div>
+            <div style="font-size: 0.85rem; color: {tema_atual['text_muted']}; margin-bottom: 0.75rem;">
                 Especialista em Ciência de Dados e IA | Jornalista | Desenvolvedor de Soluções Avançadas
             </div>
             <div class="footer-contact" style="margin-bottom: 0.75rem;">

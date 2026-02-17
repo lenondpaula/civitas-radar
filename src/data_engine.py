@@ -224,6 +224,222 @@ CENARIOS: Dict[str, dict] = {
             ],
         },
     },
+    # ── NOVOS CENÁRIOS ────────────────────────────────────────
+    "Avanço na Segurança Pública": {
+        "distribuicao": {"Negativo": 0.08, "Neutro": 0.17, "Positivo": 0.75},
+        "keywords": {
+            "Positivo": [
+                "índices de criminalidade caíram 30%, parabéns!", "ronda no bairro toda noite, finalmente!",
+                "câmeras de monitoramento funcionando, me sinto mais segura",
+                "policiamento comunitário mudou nossa realidade",
+                "Guarda Municipal presente nas escolas, meus filhos seguros",
+                "operação integrada deu resultado, prenderam a quadrilha",
+                "iluminação pública nova reduziu assaltos no bairro",
+                "programa de patrulhamento preventivo é exemplar",
+                "Central de Monitoramento 24h está funcionando de verdade",
+                "minha vizinhança nunca esteve tão tranquila",
+                "investimento em inteligência policial dando frutos",
+                "parceria com a Brigada Militar trouxe paz pro bairro",
+                "aplicativo de denúncia anônima é sensacional",
+                "rondas escolares reduziram a zero os furtos na região",
+                "efetivo da Guarda Municipal duplicou, era o que precisávamos",
+                "sistema de alarme comunitário funcionou na madrugada 👏",
+            ],
+            "Neutro": [
+                "reunião do conselho de segurança marcada para amanhã",
+                "prefeitura apresentou plano de segurança no bairro",
+                "novas viaturas foram entregues à Guarda Municipal",
+                "secretário de segurança deu entrevista sobre os dados",
+                "audiência pública sobre segurança acontece esta semana",
+            ],
+            "Negativo": [
+                "cadê a segurança prometida? assaltaram meu vizinho",
+                "câmera de monitoramento quebrada há semanas",
+                "policiamento só aparece em ano de eleição",
+                "muita propaganda e pouca ação concreta",
+            ],
+        },
+    },
+    "Revolução na Educação": {
+        "distribuicao": {"Negativo": 0.07, "Neutro": 0.18, "Positivo": 0.75},
+        "keywords": {
+            "Positivo": [
+                "escola reformada ficou linda, parabéns à gestão!",
+                "tablets para todos os alunos da rede municipal 👏",
+                "IDEB da cidade subiu pelo terceiro ano consecutivo",
+                "merenda escolar de qualidade, meus filhos adoram",
+                "programa de alfabetização atingiu 98% das crianças",
+                "professores receberam aumento e capacitação, merecido!",
+                "creches novas inauguradas em 5 bairros, era o que faltava",
+                "biblioteca comunitária aberta aos fins de semana, excelente",
+                "aulas de robótica nas escolas públicas, futuro chegando!",
+                "transporte escolar gratuito para zona rural, inclusão real",
+                "escola integral mudou a vida das famílias do bairro",
+                "programa de bolsas para universitários é referência",
+                "laboratório de informática novinho em folha na escola",
+                "parceria com universidades trouxe reforço escolar gratuito",
+                "índice de evasão escolar caiu pela metade este ano",
+                "alunos da rede municipal ganharam olimpíada de matemática!",
+            ],
+            "Neutro": [
+                "matrícula aberta para o próximo semestre",
+                "secretaria de educação divulgou o calendário letivo",
+                "reunião de pais acontece na quinta-feira",
+                "concurso para professores está com inscrições abertas",
+                "novo currículo será implementado no próximo ano",
+            ],
+            "Negativo": [
+                "escola com goteira e banheiro quebrado, descaso",
+                "professores sobrecarregados, sem reforço nenhum",
+                "faltam professores em várias disciplinas importantíssimas",
+                "cantina da escola sem condições mínimas de higiene",
+            ],
+        },
+    },
+    "Crise Habitacional": {
+        "distribuicao": {"Negativo": 0.82, "Neutro": 0.10, "Positivo": 0.08},
+        "keywords": {
+            "Negativo": [
+                "famílias despejadas sem alternativa nenhuma, desumano",
+                "aluguel disparou 40%, impossível viver nesta cidade",
+                "ocupação irregular crescendo por falta de política habitacional",
+                "conjunto habitacional prometido há 5 anos e nada construído",
+                "moradores vivendo em barracos de lona, vergonha total",
+                "remoção forçada sem reassentamento, onde vamos morar?",
+                "milhares na fila do Minha Casa Minha Vida sem resposta",
+                "prédio condenado e famílias ainda morando lá, perigo!",
+                "especulação imobiliária expulsa os pobres do centro",
+                "sem-teto aumentou 200% em dois anos, cadê a política pública?",
+                "água e esgoto inexistentes na vila, condições subumanas",
+                "promessa de casa própria virou pesadelo burocrático",
+                "crianças crescendo em área de risco sem nenhuma assistência",
+                "déficit habitacional é uma bomba-relógio nesta cidade",
+                "invasão de terreno público por desespero, governo omisso",
+                "comunidade inteira sem escritura, abandonados pelo poder público",
+            ],
+            "Neutro": [
+                "prefeitura anunciou novo programa habitacional",
+                "cadastro aberto para sorteio de apartamentos populares",
+                "audiência pública sobre zoneamento urbano esta semana",
+                "Caixa vai financiar novas unidades na periferia",
+            ],
+            "Positivo": [
+                "finalmente recebi a chave da minha casa, obrigado!",
+                "regularização fundiária avançou no bairro, alívio",
+                "mutirão de construção entregou 50 casas, emocionante",
+            ],
+        },
+    },
+    "Enchente / Inundação": {
+        "distribuicao": {"Negativo": 0.75, "Neutro": 0.15, "Positivo": 0.10},
+        "keywords": {
+            "Negativo": [
+                "água invadiu minha casa de madrugada, perdi tudo que tinha",
+                "ruas completamente alagadas, trânsito parado há horas",
+                "bombeiros resgatando famílias de barco, cena de guerra",
+                "bueiro entupido transbordou e destruiu comércios inteiros",
+                "sistema de drenagem nunca funcionou, toda chuva é isso",
+                "bairro inteiro debaixo d'água, cadê a Defesa Civil?",
+                "moramos em área de risco e ninguém nos realocou ainda",
+                "enchente destruiu a escola do bairro, crianças sem aula",
+                "nível do Guaíba subiu de novo, estamos em alerta máximo",
+                "pontes interditadas, cidade isolada pelo segundo dia",
+                "deslizamento de terra soterrou casas na encosta",
+                "colheita inteira perdida pela inundação, prejuízo milionário",
+                "abrigos lotados e falta mantimento, situação crítica",
+                "contaminação da água após enchente, risco de doença",
+                "famílias estão no ginásio há uma semana sem resposta do governo",
+                "barragem transbordou e ninguém foi avisado, negligência total",
+            ],
+            "Neutro": [
+                "Defesa Civil emitiu alerta de chuvas fortes para as próximas horas",
+                "nível do rio está sendo monitorado em tempo real",
+                "escolas suspenderam aulas preventivamente",
+                "voluntários se organizam para doações no centro comunitário",
+                "meteorologia prevê trégua na chuva a partir de amanhã",
+            ],
+            "Positivo": [
+                "solidariedade gaúcha é impressionante, toneladas de doações",
+                "voluntários trabalhando dia e noite, orgulho do nosso povo",
+                "resgate salvou família inteira, heróis sem capa",
+                "governo liberou verba emergencial para reconstrução, boa notícia",
+            ],
+        },
+    },
+    "Estado de Emergência": {
+        "distribuicao": {"Negativo": 0.70, "Neutro": 0.18, "Positivo": 0.12},
+        "keywords": {
+            "Negativo": [
+                "decreto de emergência e ninguém vê ação concreta",
+                "hospitais de campanha sem médicos, pra que servem?",
+                "distribuição de cestas básicas é caótica e insuficiente",
+                "energia cortada há 4 dias, idosos passando mal",
+                "estradas destruídas e sem previsão de reparo",
+                "prefeitura demorou 72h pra decretar emergência, absurdo",
+                "falta de coordenação entre governo estadual e municipal",
+                "verba de emergência não chega na ponta, onde tá o dinheiro?",
+                "população desabrigada dormindo ao relento, desumano",
+                "comunicação falha do governo deixou população sem orientação",
+                "saqueadores aproveitando o caos, sensação de abandono total",
+                "estoques de água potável acabaram nos abrigos",
+                "animais abandonados por toda parte, ninguém recolhe",
+                "sistema de saúde colapsou com a demanda emergencial",
+                "governo prometeu ajuda que nunca chegou, indignante",
+                "cadáveres sendo encontrados nos escombros, tragédia anunciada",
+            ],
+            "Neutro": [
+                "forças armadas mobilizadas para apoio logístico",
+                "governo federal anunciou pacote de ajuda emergencial",
+                "coletiva de imprensa do prefeito marcada para as 18h",
+                "Defesa Civil contabiliza os danos para relatório oficial",
+                "comitê de crise se reúne diariamente pela manhã",
+            ],
+            "Positivo": [
+                "rede de abrigos organizados está salvando vidas",
+                "operação de resgate já retirou 500 pessoas da área de risco",
+                "doações de todo o Brasil chegando sem parar, obrigado!",
+                "reconstrução começou rapidamente, equipes competentes",
+                "governo federal liberou R$ 200 milhões, esperança",
+            ],
+        },
+    },
+    "Calamidade Climática": {
+        "distribuicao": {"Negativo": 0.72, "Neutro": 0.16, "Positivo": 0.12},
+        "keywords": {
+            "Negativo": [
+                "ciclone devastou a região sul, destruição total",
+                "ventos de 120km/h arrancaram telhados de centenas de casas",
+                "seca extrema destruiu a safra inteira, agricultores desesperados",
+                "onda de calor matou idosos, sistema de saúde não deu conta",
+                "granizo do tamanho de bola de tênis destruiu carros e plantações",
+                "tornado atingiu comunidade rural, famílias desaparecidas",
+                "incêndios florestais fora de controle, fumaça cobre a cidade",
+                "deslizamentos em série isolaram comunidades por dias",
+                "rio secou e cidades estão sem abastecimento de água",
+                "tempestade deixou 500 mil sem luz, previsão de dias sem energia",
+                "erosão costeira destruiu casas à beira-mar no litoral",
+                "lavouras perdidas pela geada recorde, produtor no prejuízo",
+                "município inteiro evacuado após rompimento de barragem",
+                "mudanças climáticas castigando o RS cada vez mais forte",
+                "infraestrutura não aguenta eventos extremos, governo negligente",
+                "três meses de chuva em 24 horas, cidade não estava preparada",
+            ],
+            "Neutro": [
+                "INMET emitiu alerta vermelho para a região",
+                "Defesa Civil ativou protocolo de calamidade pública",
+                "governador sobrevoou áreas atingidas nesta manhã",
+                "levantamento de danos em andamento pelas equipes técnicas",
+                "a previsão indica melhora gradual para os próximos dias",
+            ],
+            "Positivo": [
+                "mobilização social é emocionante, gaúcho não abandona gaúcho",
+                "força-tarefa de reconstrução avança rápido, orgulho!",
+                "governo anunciou plano de resiliência climática para o estado",
+                "comunidades se reerguendo com união e esperança",
+                "bombeiros e voluntários são os verdadeiros heróis desta tragédia",
+            ],
+        },
+    },
 }
 
 
@@ -612,6 +828,101 @@ def extrair_texto_imagem(caminho_imagem: str) -> str:
 # ──────────────────────────────────────────────────────────────
 # Coleta de notícias reais (Google News) + fallback
 # ──────────────────────────────────────────────────────────────
+def _normalizar_data_google(data_str: str) -> str:
+    """
+    Normaliza strings de data do Google News como 'á 18min',
+    '2 hours ago', 'há 3 dias' etc. para formato dd/mm/YYYY legível.
+    """
+    import re as _re
+
+    if not data_str:
+        return datetime.now().strftime("%d/%m/%Y")
+
+    data_lower = data_str.lower().strip()
+
+    # Tenta detectar padrões relativos: "á 18min", "há 3 horas", "2 days ago" etc.
+    padroes_relativos = [
+        # Português: "á 18min", "há 2 horas", "há 3 dias"
+        (r"[áàha]+\s*(\d+)\s*min", "minutes"),
+        (r"[áàha]+\s*(\d+)\s*hora", "hours"),
+        (r"[áàha]+\s*(\d+)\s*dia", "days"),
+        (r"[áàha]+\s*(\d+)\s*semana", "weeks"),
+        (r"[áàha]+\s*(\d+)\s*m[eê]s", "months"),
+        # Inglês: "18 minutes ago", "2 hours ago"
+        (r"(\d+)\s*minute", "minutes"),
+        (r"(\d+)\s*hour", "hours"),
+        (r"(\d+)\s*day", "days"),
+        (r"(\d+)\s*week", "weeks"),
+        (r"(\d+)\s*month", "months"),
+        # Variações curtas: "18m", "2h", "3d"
+        (r"[áàha]*\s*(\d+)\s*m\b", "minutes"),
+        (r"[áàha]*\s*(\d+)\s*h\b", "hours"),
+        (r"[áàha]*\s*(\d+)\s*d\b", "days"),
+    ]
+
+    for padrao, unidade in padroes_relativos:
+        match = _re.search(padrao, data_lower)
+        if match:
+            valor = int(match.group(1))
+            if unidade == "minutes":
+                dt = datetime.now() - timedelta(minutes=valor)
+            elif unidade == "hours":
+                dt = datetime.now() - timedelta(hours=valor)
+            elif unidade == "days":
+                dt = datetime.now() - timedelta(days=valor)
+            elif unidade == "weeks":
+                dt = datetime.now() - timedelta(weeks=valor)
+            elif unidade == "months":
+                dt = datetime.now() - timedelta(days=valor * 30)
+            else:
+                dt = datetime.now()
+            return dt.strftime("%d/%m/%Y %H:%M")
+
+    # Se o Google News já retornou algo como "Jan 15, 2026" — tenta parsear
+    for fmt in ("%b %d, %Y", "%d %b %Y", "%d/%m/%Y", "%Y-%m-%d"):
+        try:
+            dt = datetime.strptime(data_str.strip(), fmt)
+            return dt.strftime("%d/%m/%Y")
+        except ValueError:
+            continue
+
+    # Fallback: retorna a própria string se nada funcionou
+    return data_str
+
+
+def _limpar_link_google(link_raw: str) -> str:
+    """
+    Extrai a URL real do redirect do Google News.
+    Links vêm no formato: ./articles/CBMi... ou https://news.google.com/rss/articles/...
+    Tenta resolver via GoogleNews.get_full_link() caso disponível, senão retorna a fonte.
+    """
+    import re as _re
+
+    if not link_raw or link_raw == "#":
+        return "#"
+
+    # Se já for um link direto para o veículo
+    if link_raw.startswith("http") and "news.google" not in link_raw and "/articles/" not in link_raw:
+        return link_raw
+
+    # Tenta extrair a URL real dos parâmetros de redirect
+    match = _re.search(r'url=(https?://[^&]+)', link_raw)
+    if match:
+        return match.group(1)
+
+    # Para links relativos do GoogleNews (./articles/...) — construir URL de busca
+    # A lib GoogleNews retorna links relativos; precisamos prefixar
+    if link_raw.startswith("./"):
+        link_raw = "https://news.google.com" + link_raw[1:]
+
+    # Se tem /articles/ mas não conseguimos extrair, retornamos o link do Google
+    if "/articles/" in link_raw and link_raw.startswith("http"):
+        return link_raw
+
+    # Último recurso
+    return link_raw if link_raw.startswith("http") else "#"
+
+
 def buscar_noticias_google(termo: str, qtd: int = 5) -> List[Dict[str, str]]:
     """
     Busca notícias reais no Google News.
@@ -637,11 +948,19 @@ def buscar_noticias_google(termo: str, qtd: int = 5) -> List[Dict[str, str]]:
 
         noticias = []
         for r in resultados[:qtd]:
+            # Normaliza data relativa para formato legível
+            data_raw = r.get("date", "Recente")
+            data_formatada = _normalizar_data_google(data_raw)
+
+            # Limpa link do Google News redirect
+            link_raw = r.get("link", "#")
+            link_limpo = _limpar_link_google(link_raw)
+
             noticias.append(
                 {
                     "titulo": r.get("title", "Sem título"),
-                    "data": r.get("date", "Recente"),
-                    "link": r.get("link", "#"),
+                    "data": data_formatada,
+                    "link": link_limpo,
                     "fonte": r.get("media", "Fonte desconhecida"),
                 }
             )

@@ -474,7 +474,14 @@ def _gerar_css_tema(t: dict) -> str:
 
     /* ═══ OCULTAR BRANDING ═══ */
     #MainMenu {{visibility: hidden;}}
-    header {{visibility: hidden;}}
+    header[data-testid="stHeader"] {{
+        background: transparent !important;
+        /* manter botão de toggle da sidebar visível */
+    }}
+    header[data-testid="stHeader"] .stAppDeployButton,
+    header[data-testid="stHeader"] .stToolbar {{
+        display: none !important;
+    }}
     footer {{visibility: hidden;}}
 
     /* ═══ FOOTER ═══ */

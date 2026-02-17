@@ -51,6 +51,18 @@ streamlit run app/dashboard.py
 
 Acesse: **http://localhost:8501**
 
+### Usando GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/lenondpaula/civitas-radar)
+
+O projeto está otimizado para uso em GitHub Codespaces. Para começar:
+
+1. Clique no badge acima ou acesse [github.com/codespaces](https://github.com/codespaces)
+2. O ambiente será configurado automaticamente
+3. Execute: `streamlit run app/dashboard.py`
+
+> ⚠️ **Importante**: Sempre faça commit de suas mudanças antes de fechar o Codespace. [Veja o guia de recuperação](.github/CODESPACE_RECOVERY.md) caso tenha problemas.
+
 ---
 
 ## 🛠️ Stack Tecnológica
@@ -135,6 +147,26 @@ Profissional com formação em Jornalismo (UFSM) e pós-graduação em Ciência 
 
 - 📂 **Repositório**: [github.com/lenondpaula/civitas-radar](https://github.com/lenondpaula/civitas-radar)
 - 🧪 **Portfolio**: [goodluke.streamlit.app](https://goodluke.streamlit.app)
+
+---
+
+## 🆘 Troubleshooting
+
+### Problemas com Codespaces
+
+Se seu Codespace não abrir ou você tiver mudanças não commitadas:
+
+1. **Verificar status**: Acesse [github.com/codespaces](https://github.com/codespaces) e veja o status
+2. **Tentar reiniciar**: Clique em "Start" e aguarde alguns minutos
+3. **Exportar mudanças**: Use "Export changes" no menu do Codespace
+4. **Usar script de verificação**: Execute `.github/scripts/check_codespace_recovery.sh`
+5. **Consultar guia completo**: [Guia de Recuperação de Codespaces](.github/CODESPACE_RECOVERY.md)
+
+### Outros Problemas Comuns
+
+- **Erro ao instalar dependências**: Certifique-se de usar Python 3.10+
+- **TextBlob não funciona**: Execute `python -m textblob.download_corpora`
+- **Streamlit não inicia**: Verifique se a porta 8501 está livre
 
 ---
 

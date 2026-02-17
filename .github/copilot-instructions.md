@@ -5,7 +5,7 @@
 **Civitas-Radar** é uma plataforma de **Inteligência Política e Monitoramento de Reputação Digital** em tempo real.
 A aplicação simula cenários de crise e oportunidade na esfera pública, combinando dados simulados de redes sociais com notícias reais via Google News.
 
-O visual segue o conceito **"War Room"** (Sala de Situação), com tema escuro, vermelho accent (#e94560) e alto contraste.
+O visual segue o conceito **"War Room"** (Sala de Situação), com 3 temas dinâmicos (Dark, Grey, Light) e suporte bilíngue (PT-BR + ES).
 
 ---
 
@@ -17,10 +17,12 @@ O visual segue o conceito **"War Room"** (Sala de Situação), com tema escuro, 
 | **Streamlit** | Framework Web interativo |
 | **Pandas** | Manipulação e análise de dados |
 | **NumPy** | Operações numéricas |
-| **Plotly** | Visualizações interativas (Donut, Timeline) |
+| **Plotly** | Visualizações interativas (Donut, Timeline, Barras, Mapbox) |
 | **Faker** | Geração de dados sintéticos (locale pt_BR) |
-| **GoogleNews** | Coleta de notícias reais |
+| **GoogleNews** | Coleta de notícias reais (com limpeza de links e normalização de datas) |
 | **TextBlob** | Análise de sentimento |
+| **Google Generative AI** | Spin Doctor via Gemini (com fallback local) |
+| **Selenium** | Keep-alive do app no Streamlit Cloud |
 
 ---
 
@@ -29,16 +31,18 @@ O visual segue o conceito **"War Room"** (Sala de Situação), com tema escuro, 
 ```
 civitas-radar/
 ├── app/
-│   └── dashboard.py          # 🎯 Dashboard Streamlit (War Room) — 3 abas
+│   └── dashboard.py              # 🎯 Dashboard Streamlit (War Room) — 3 abas + i18n + temas
 ├── src/
 │   ├── __init__.py
-│   ├── data_engine.py         # 🧠 Motor de simulação, geo e coleta de dados
-│   └── ai_advisor.py          # 🏛️ Spin Doctor (Gerador de Respostas IA)
-├── data/                      # 📁 Dados auxiliares e cache
+│   ├── data_engine.py            # 🧠 Motor de simulação, geo e coleta (10 cenários)
+│   └── ai_advisor.py             # 🏛️ Spin Doctor (Gerador de Respostas IA via Gemini)
+├── data/                         # 📁 Dados auxiliares e cache
 ├── .github/
-│   ├── copilot-instructions.md
-│   └── INSTRUCTIONS.md
-├── requirements.txt           # 📦 Dependências
+│   ├── copilot-instructions.md   # 🤖 Este arquivo
+│   └── INSTRUCTIONS.md           # 📋 Guia de contribuição e setup
+├── keep_alive.py                 # ♻️ Script Selenium para manter app ativo
+├── requirements.txt              # 📦 Dependências Python
+├── .gitignore
 └── README.md
 ```
 
@@ -56,32 +60,43 @@ civitas-radar/
 
 ### Streamlit
 - Usar `st.markdown()` com `unsafe_allow_html=True` para componentes estilizados.
-- CSS customizado inline via `<style>` tags.
+- CSS customizado dinâmico via `_gerar_css_tema()` — **não usar cores hardcoded**.
 - Session state para persistência entre execuções.
 - Layout `wide` obrigatório.
 
-### Tema Visual (War Room)
-- Background principal: `#0e1117`
-- Card background: `#1a1a2e`
-- Accent color: `#e94560`
-- Text primary: `#e2e8f0`
-- Text secondary: `#8892b0`
-- Text muted: `#718096`
-- Positivo: `#48bb78` / Negativo: `#fc8181` / Neutro: `#a0aec0`
-- Border: `#2d3748`
+### Sistema de Temas (3 paletas dinâmicas)
+As cores **não são fixas** — são definidas no dict `TEMAS` e aplicadas via `_gerar_css_tema(tema)`.
+
+| Tema | Background | Cards | Accent |
+|------|-----------|-------|--------|
+| **Dark** | `#0a0e14` | `#131a27` | `#e94560` |
+| **Grey** | `#1e1e2e` | `#2a2a3e` | `#e94560` |
+| **Light** | `#f0f2f6` | `#ffffff` | `#cf222e` |
+
+Cada tema define: `bg`, `card`, `accent`, `text`, `text2`, `muted`, `border`, `positivo`, `negativo`, `neutro`.
+
+### Sistema i18n (Internacionalização)
+- Dict `I18N` com chaves para PT-BR e ES.
+- Todos os rótulos, abas, KPIs, botões, mensagens e onboarding são traduzidos.
+- Ao adicionar novos textos, incluir ambas as traduções no dict `I18N`.
+- Idioma selecionado via sidebar e armazenado em `session_state`.
 
 ---
 
 ## Módulos Principais
 
 ### `src/data_engine.py`
-- `CENARIOS`: dict com 4 cenários pré-definidos (cada um com keywords positivas, negativas e neutras).
+- `CENARIOS`: dict com **10 cenários** pré-definidos (cada um com keywords positivas, negativas e neutras):
+  - Crise na Saúde, Corrupção, Inauguração, Viral Positivo
+  - Segurança Pública, Educação, Crise Habitacional, Enchente, Emergência, Calamidade Climática
 - `NIVEIS_GEO`: segmentação territorial hierárquica (Capital, Metropolitana, Estadual) com coordenadas reais.
 - `SimuladorRedes(nivel_geo)`: classe principal — gera DataFrames com geo-localização.
   - `gerar_comentarios()`: redes sociais com Bairro/Lat/Lon.
   - `gerar_transcricoes_radio_tv()`: simulação Rádio/TV.
   - `gerar_mensagens_whatsapp()`: Dark Social com detecção de viralidade.
 - `buscar_noticias_google(termo)`: notícias reais via GoogleNews.
+- `_limpar_link_google(url)`: remove `&ved=`, `&usg=`, `#google_vignette` dos links.
+- `_normalizar_data_google(data_str)`: converte datas relativas ("há 2 dias") para `datetime`.
 - `transcrever_audio(arquivo)`: transcrição via Whisper.
 - `extrair_texto_imagem(caminho)`: OCR via EasyOCR.
 
@@ -92,23 +107,31 @@ civitas-radar/
 
 ### `app/dashboard.py`
 - Dashboard "War Room" com 3 abas:
-  - **Radar Tradicional**: KPIs, gráficos, feeds, Rádio/TV, WhatsApp.
-  - **Mapa de Crise**: densidade geográfica de sentimentos (density_mapbox).
-  - **Sala de Comando**: Spin Doctor — geração de notas estratégicas por IA.
-- Sidebar com controle de escala geográfica e parâmetros.
+  - **📡 Radar Tradicional**: KPIs, gráficos (Donut + Timeline + Barras), Notícias, Rádio/TV, WhatsApp, Voz das Ruas.
+  - **🗺️ Mapa de Crise**: density_mapbox com segmentação geográfica + tabela de dados.
+  - **🏛️ Sala de Comando**: Spin Doctor — geração de notas estratégicas por IA em 3 tons.
+- Sidebar: idioma, tema, escala geográfica, cenário, volume, filtros.
+- Onboarding: expander "Como usar esta aplicação" com guia detalhado (bilíngue).
+- CSS dinâmico: `_gerar_css_tema()` aplica tema a todos os componentes.
+
+### `keep_alive.py`
+- Script Selenium headless que visita `https://civitas-radar.streamlit.app/` periodicamente.
+- Mantém o app ativo no Streamlit Cloud para evitar hibernação.
 
 ---
 
 ## Regras para Agentes de IA
 
-1. **Sempre mantenha o tema War Room** — não altere as cores accent sem instrução explícita.
-2. **Gere textos e labels em pt-BR** salvo indicação contrária.
+1. **Respeite o sistema de temas** — use `TEMAS[tema]` para cores, nunca hardcode.
+2. **Gere textos e labels em pt-BR e ES** — adicione traduções ao dict `I18N`.
 3. **Prefira Plotly** para novas visualizações.
 4. **Dados sensíveis de políticos são fictícios** — mantenha simulações genéricas.
 5. **Nunca exponha credenciais** ou chaves de API no código.
 6. **Teste alterações** com `streamlit run app/dashboard.py` antes de confirmar.
 7. **Mantenha a modularidade**: lógica de dados em `src/`, visual em `app/`.
 8. **Use session_state** para dados que precisam persistir entre reruns do Streamlit.
+9. **Links do Google News** passam por `_limpar_link_google()` — mantenha esse tratamento.
+10. **Onboarding** deve ser atualizado em ambas as línguas ao adicionar features.
 
 ---
 

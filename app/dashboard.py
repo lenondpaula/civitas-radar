@@ -92,17 +92,21 @@ I18N = {
 
 **Passo a passo:**
 1. **Configure** o nome do político/monitorado na barra lateral esquerda.
-2. **Selecione** um cenário de simulação (ex: Crise na Saúde, Enchente, etc.).
+2. **Selecione** um cenário de simulação — são **10 cenários** disponíveis (Crise na Saúde, Corrupção, Inauguração, Viral Positivo, Segurança Pública, Educação, Crise Habitacional, Enchente, Estado de Emergência, Calamidade Climática).
 3. **Escolha** a escala geográfica (Capital, Região Metropolitana ou Macrorregiões).
 4. **Ajuste** o volume de menções desejado com o slider.
 5. **Clique** em "🔄 Atualizar Inteligência" para gerar os dados.
 
 **Abas disponíveis:**
-- **Radar Tradicional**: KPIs, gráficos de sentimento, feed de notícias e redes sociais, Rádio/TV e WhatsApp.
-- **Mapa de Crise**: Visualização georreferenciada com mapa de calor de sentimentos por região.
-- **Sala de Comando**: Spin Doctor — geração automática de notas estratégicas de resposta por IA.
+- **📡 Radar Tradicional**: KPIs, gráficos de sentimento (Donut + Timeline), Intel Imprensa (Google News em tempo real), Voz das Ruas, Rádio/TV e WhatsApp Sentinela.
+- **🗺️ Mapa de Crise**: Mapa de calor georreferenciado com sentimento por região + ranking de regiões críticas e favoráveis.
+- **🏛️ Sala de Comando**: Spin Doctor — selecione menções negativas e gere notas estratégicas por IA (Gemini ou template local) com 3 tons: Institucional, Militância e Empático.
 
-**Dica**: Os dados de redes sociais são simulados para demonstração. As notícias são coletadas em tempo real via Google News.
+**Personalização:**
+- **🌐 Idioma**: Alterne entre Português (BR) e Espanhol (América Latina) no seletor acima.
+- **🎨 Tema**: Escolha entre Dark, Grey ou Light no seletor de tema.
+
+**Dica**: Os dados de redes sociais são simulados para demonstração. As notícias são coletadas em tempo real via Google News, com links limpos e datas normalizadas.
 """,
         "label_favoravel": "✅ FAVORÁVEL",
         "label_critico": "🚨 CRÍTICO",
@@ -173,17 +177,21 @@ I18N = {
 
 **Paso a paso:**
 1. **Configure** el nombre del político/monitoreado en la barra lateral izquierda.
-2. **Seleccione** un escenario de simulación (ej: Crisis de Salud, Inundación, etc.).
+2. **Seleccione** un escenario de simulación — hay **10 escenarios** disponibles (Crisis de Salud, Corrupción, Inauguración, Viral Positivo, Seguridad Pública, Educación, Crisis Habitacional, Inundación, Estado de Emergencia, Calamidad Climática).
 3. **Elija** la escala geográfica (Capital, Región Metropolitana o Macrorregiones).
 4. **Ajuste** el volumen de menciones deseado con el slider.
 5. **Haga clic** en "🔄 Actualizar Inteligencia" para generar los datos.
 
 **Pestañas disponibles:**
-- **Radar Tradicional**: KPIs, gráficos de sentimiento, feed de noticias y redes sociales, Radio/TV y WhatsApp.
-- **Mapa de Crisis**: Visualización georreferenciada con mapa de calor de sentimientos por región.
-- **Sala de Comando**: Spin Doctor — generación automática de notas estratégicas de respuesta por IA.
+- **📡 Radar Tradicional**: KPIs, gráficos de sentimiento (Donut + Línea de Tiempo), Intel Prensa (Google News en tiempo real), Voz de las Calles, Radio/TV y WhatsApp Centinela.
+- **🗺️ Mapa de Crisis**: Mapa de calor georreferenciado con sentimiento por región + ranking de regiones críticas y favorables.
+- **🏛️ Sala de Comando**: Spin Doctor — seleccione menciones negativas y genere notas estratégicas por IA (Gemini o plantilla local) con 3 tonos: Institucional, Militancia y Empático.
 
-**Consejo**: Los datos de redes sociales son simulados para demostración. Las noticias se recopilan en tiempo real a través de Google News.
+**Personalización:**
+- **🌐 Idioma**: Alterne entre Portugués (BR) y Español (América Latina) en el selector superior.
+- **🎨 Tema**: Elija entre Dark, Grey o Light en el selector de tema.
+
+**Consejo**: Los datos de redes sociales son simulados para demostración. Las noticias se recopilan en tiempo real a través de Google News, con enlaces limpios y fechas normalizadas.
 """,
         "label_favoravel": "✅ FAVORABLE",
         "label_critico": "🚨 CRÍTICO",

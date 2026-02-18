@@ -848,14 +848,18 @@ with tab_radar:
         for _, row in df.head(15).iterrows():
             classe = row["Sentimento"].lower()
             icone = icone_sentimento.get(row["Sentimento"], "⚪")
+            usuario_safe = _html.escape(str(row['Usuario']))
+            texto_safe = _html.escape(str(row['Texto']))
+            plataforma_safe = _html.escape(str(row['Plataforma']))
+            bairro_safe = _html.escape(str(row['Bairro']))
             social_cards_html += f"""
             <div class="comment-row {classe}">
-                <strong>{row['Usuario']}</strong>
-                <span style="float:right;font-size:0.8rem;color:#718096">{row['Plataforma']}</span>
+                <strong>{usuario_safe}</strong>
+                <span style="float:right;font-size:0.8rem;color:{tema_atual['text_muted']}">{plataforma_safe}</span>
                 <br/>
-                <span style="color:#e2e8f0">{icone} {row['Texto']}</span>
+                <span style="color:{tema_atual['text_primary']}">{icone} {texto_safe}</span>
                 <br/>
-                <small style="color:#4a5568">{row['Data'].strftime('%d/%m %H:%M')} • {row['Bairro']}</small>
+                <small style="color:{tema_atual['text_muted']}">{row['Data'].strftime('%d/%m %H:%M')} • {bairro_safe}</small>
             </div>
             """
         social_cards_html += '</div>'

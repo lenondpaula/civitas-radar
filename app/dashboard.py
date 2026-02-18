@@ -526,26 +526,6 @@ def _gerar_css_tema(t: dict) -> str:
         padding: 1rem 1.2rem; margin-bottom: 1rem;
     }}
 
-    /* ═══ VOZ DAS RUAS — scroll sincronizado com notícias ═══ */
-    .social-feed-scroll {{
-        max-height: 520px;
-        overflow-y: auto;
-        padding-right: 4px;
-    }}
-    .social-feed-scroll::-webkit-scrollbar {{
-        width: 5px;
-    }}
-    .social-feed-scroll::-webkit-scrollbar-track {{
-        background: {t['bg_card']};
-        border-radius: 4px;
-    }}
-    .social-feed-scroll::-webkit-scrollbar-thumb {{
-        background: {t['border']};
-        border-radius: 4px;
-    }}
-    .social-feed-scroll::-webkit-scrollbar-thumb:hover {{
-        background: {t['text_muted']};
-    }}
     </style>
     """
 
@@ -844,7 +824,6 @@ with tab_radar:
     with col_social:
         st.markdown(f"#### {T['intel_ruas']}")
         icone_sentimento = {"Positivo": "🟢", "Negativo": "🔴", "Neutro": "⚪"}
-        social_cards_html = '<div class="social-feed-scroll">'
         for _, row in df.head(15).iterrows():
             classe = row["Sentimento"].lower()
             icone = icone_sentimento.get(row["Sentimento"], "⚪")
@@ -852,18 +831,19 @@ with tab_radar:
             texto_safe = _html.escape(str(row['Texto']))
             plataforma_safe = _html.escape(str(row['Plataforma']))
             bairro_safe = _html.escape(str(row['Bairro']))
-            social_cards_html += f"""
-            <div class="comment-row {classe}">
-                <strong>{usuario_safe}</strong>
-                <span style="float:right;font-size:0.8rem;color:{tema_atual['text_muted']}">{plataforma_safe}</span>
-                <br/>
-                <span style="color:{tema_atual['text_primary']}">{icone} {texto_safe}</span>
-                <br/>
-                <small style="color:{tema_atual['text_muted']}">{row['Data'].strftime('%d/%m %H:%M')} • {bairro_safe}</small>
-            </div>
-            """
-        social_cards_html += '</div>'
-        st.markdown(social_cards_html, unsafe_allow_html=True)
+            row_html = (
+                f"<div class=\"comment-row {classe}\">"
+                f"<strong>{usuario_safe}</strong>"
+                f"<span style=\"float:right;font-size:0.8rem;color:{tema_atual['text_muted']}\">"
+                f"{plataforma_safe}</span>"
+                "<br/>"
+                f"<span style=\"color:{tema_atual['text_primary']}\">{icone} {texto_safe}</span>"
+                "<br/>"
+                f"<small style=\"color:{tema_atual['text_muted']}\">"
+                f"{row['Data'].strftime('%d/%m %H:%M')} • {bairro_safe}</small>"
+                "</div>"
+            )
+            st.markdown(row_html, unsafe_allow_html=True)
 
     st.divider()
 

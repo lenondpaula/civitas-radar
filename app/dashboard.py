@@ -82,7 +82,7 @@ I18N = {
         "modo_opcao_manual": "Texto manual",
         "texto_manual_label": "✍️ Texto manual",
         "texto_manual_placeholder": "Cole aqui um comentário, demanda da imprensa ou trecho crítico para resposta...",
-        "texto_manual_vazio": "Informe um texto para gerar a nota.",
+        "texto_manual_vazio": "Selecione uma menção ou informe um texto para gerar a nota.",
         "texto_manual_titulo": "Texto manual",
         "selecione_mencao": "🎯 Selecione a menção para responder",
         "mencao_selecionada": "Menção selecionada",
@@ -176,7 +176,7 @@ I18N = {
         "modo_opcao_manual": "Texto manual",
         "texto_manual_label": "✍️ Texto manual",
         "texto_manual_placeholder": "Pegue aqui un comentario, una demanda de prensa o un fragmento crítico para responder...",
-        "texto_manual_vazio": "Ingrese un texto para generar la nota.",
+        "texto_manual_vazio": "Seleccione una mención o ingrese un texto para generar la nota.",
         "texto_manual_titulo": "Texto manual",
         "selecione_mencao": "🎯 Seleccione la mención para responder",
         "mencao_selecionada": "Mención seleccionada",
@@ -1129,67 +1129,75 @@ with tab_comando:
                 unsafe_allow_html=True,
             )
 
-        # Controles do Spin Doctor
-        col_tom, col_btn = st.columns([3, 1])
+    # Controles do Spin Doctor
+    col_tom, col_btn = st.columns([3, 1])
 
-        with col_tom:
-            tom_selecionado = st.radio(
-                T["tom_resposta"],
-                options=list(TONS_RESPOSTA.keys()),
-                format_func=lambda t: f"{TONS_RESPOSTA[t]['emoji']} {t} — {TONS_RESPOSTA[t]['descricao']}",
-                horizontal=True,
-            )
+    with col_tom:
+        tom_selecionado = st.radio(
+            T["tom_resposta"],
+            options=list(TONS_RESPOSTA.keys()),
+            format_func=lambda t: f"{TONS_RESPOSTA[t]['emoji']} {t} — {TONS_RESPOSTA[t]['descricao']}",
+            horizontal=True,
+        )
 
-        with col_btn:
-            st.markdown("<br>", unsafe_allow_html=True)
-            gerar = st.button(T["btn_gerar"], type="primary", use_container_width=True)
+    with col_btn:
+        st.markdown("<br>", unsafe_allow_html=True)
+        gerar = st.button(
+            T["btn_gerar"],
+            type="primary",
+            use_container_width=True,
+            disabled=not bool(texto_base),
+        )
 
-        # Geração da nota
-        if gerar:
-            if not texto_base:
-                st.warning(T["texto_manual_vazio"])
-            else:
-                try:
-                    api_key = st.secrets.get("GROQ_API_KEY", "")
-                except Exception:
-                    api_key = ""
+    # Geração da nota
+    if gerar:
+        if not texto_base:
+            st.warning(T["texto_manual_vazio"])
+        else:
+            try:
+                api_key = st.secrets.get("GROQ_API_KEY", "")
+                modelo = st.secrets.get("GROQ_MODEL", "")
+            except Exception:
+                api_key = ""
+                modelo = ""
 
-                with st.spinner(T["spin_processando"]):
-                    resultado = gerar_nota_estrategica(
-                        texto_critico=texto_base,
-                        tom=tom_selecionado,
-                        contexto_politico=f"Político: {nome_politico} | Cenário: {cenario_selecionado}",
-                        api_key=api_key or None,
-                    )
-
-                emoji_tom = TONS_RESPOSTA[resultado["tom"]]["emoji"]
-                fonte_badge = "🤖 Groq" if resultado["fonte"] == "groq" else "📋 Template"
-
-                nota_safe = _html.escape(str(resultado["nota"]))
-                st.markdown(
-                    f"""
-                    <div style="background:{tema_atual['bg_card']};padding:1.2rem;border-radius:10px;
-                                border:1px solid {tema_atual['border']};margin-top:1rem;">
-                        <div style="display:flex;justify-content:space-between;margin-bottom:0.8rem;">
-                            <span style="color:{tema_atual['accent']};font-weight:700;font-size:1rem;">
-                                {emoji_tom} {T['nota_estrategica']} {resultado['tom']}
-                            </span>
-                            <span style="color:{tema_atual['text_muted']};font-size:0.8rem;">{fonte_badge}</span>
-                        </div>
-                        <div style="color:{tema_atual['text_primary']};line-height:1.7;white-space:pre-wrap;">{nota_safe}</div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
+            with st.spinner(T["spin_processando"]):
+                resultado = gerar_nota_estrategica(
+                    texto_critico=texto_base,
+                    tom=tom_selecionado,
+                    contexto_politico=f"Político: {nome_politico} | Cenário: {cenario_selecionado}",
+                    api_key=api_key or None,
+                    modelo=modelo or None,
                 )
 
-                # Ações de acompanhamento
-                col_a1, col_a2, col_a3 = st.columns(3)
-                with col_a1:
-                    st.button(T["btn_copiar"], use_container_width=True)
-                with col_a2:
-                    st.button(T["btn_regenerar"], use_container_width=True)
-                with col_a3:
-                    st.button(T["btn_exportar"], use_container_width=True)
+            emoji_tom = TONS_RESPOSTA[resultado["tom"]]["emoji"]
+            fonte_badge = "🤖 Groq" if resultado["fonte"] == "groq" else "📋 Template"
+
+            nota_safe = _html.escape(str(resultado["nota"]))
+            st.markdown(
+                f"""
+                <div style="background:{tema_atual['bg_card']};padding:1.2rem;border-radius:10px;
+                            border:1px solid {tema_atual['border']};margin-top:1rem;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:0.8rem;">
+                        <span style="color:{tema_atual['accent']};font-weight:700;font-size:1rem;">
+                            {emoji_tom} {T['nota_estrategica']} {resultado['tom']}
+                        </span>
+                        <span style="color:{tema_atual['text_muted']};font-size:0.8rem;">{fonte_badge}</span>
+                    </div>
+                    <div style="color:{tema_atual['text_primary']};line-height:1.7;white-space:pre-wrap;">{nota_safe}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+            # Ações de acompanhamento
+            col_a1, col_a2, col_a3 = st.columns(3)
+            with col_a1:
+                st.button(T["btn_copiar"], use_container_width=True)
+            with col_a2:
+                st.button(T["btn_regenerar"], use_container_width=True)
+            with col_a3:
+                st.button(T["btn_exportar"], use_container_width=True)
 
 # ══════════════════════════════════════════════════════════════
 # Footer Profissional

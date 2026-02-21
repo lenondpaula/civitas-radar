@@ -57,6 +57,7 @@ def gerar_nota_estrategica(
     tom: str = "Institucional",
     contexto_politico: Optional[str] = None,
     api_key: Optional[str] = None,
+    modelo: Optional[str] = None,
 ) -> dict:
     """
     Gera uma nota de resposta estratégica a partir de um texto crítico.
@@ -72,6 +73,8 @@ def gerar_nota_estrategica(
     api_key : str, optional
         Chave da API Groq. Se não informada, usa a variável
         de ambiente GROQ_API_KEY. Se nenhuma disponível, usa fallback local.
+    modelo : str, optional
+        Nome do modelo Groq. Se não informado, usa GROQ_MODEL ou um padrão.
 
     Returns
     -------
@@ -90,7 +93,14 @@ def gerar_nota_estrategica(
     chave = api_key or os.environ.get("GROQ_API_KEY", "")
 
     if chave:
-        return _gerar_via_groq(texto_critico, tom, config_tom, contexto_politico, chave)
+        return _gerar_via_groq(
+            texto_critico,
+            tom,
+            config_tom,
+            contexto_politico,
+            chave,
+            modelo=modelo,
+        )
     else:
         return _gerar_fallback(texto_critico, tom, config_tom, contexto_politico)
 
@@ -104,6 +114,7 @@ def _gerar_via_groq(
     config_tom: dict,
     contexto: Optional[str],
     api_key: str,
+    modelo: Optional[str] = None,
 ) -> dict:
     """Gera nota usando a API da Groq com instrução de sistema."""
     try:
@@ -123,7 +134,7 @@ def _gerar_via_groq(
             "Não use markdown (negritos ou listas). Responda apenas com o texto da nota em português brasileiro."
         )
 
-        model = os.environ.get("GROQ_MODEL", "llama-3.1-70b-versatile")
+        model = modelo or os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
         payload = {
             "model": model,
             "messages": [
@@ -140,6 +151,8 @@ def _gerar_via_groq(
             headers={
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json",
+                "Accept": "application/json",
+                "User-Agent": "civitas-radar/1.0",
             },
         )
 
@@ -160,7 +173,22 @@ def _gerar_via_groq(
             "tokens_usados": int(data.get("usage", {}).get("total_tokens", 0) or 0),
         }
 
-    except (HTTPError, URLError, ValueError, KeyError) as e:
+    except HTTPError as e:
+        detalhes = ""
+        try:
+            erro_raw = e.read().decode("utf-8")
+            erro_json = json.loads(erro_raw) if erro_raw else {}
+            detalhes = erro_json.get("error", {}).get("message", "")
+        except (ValueError, UnicodeDecodeError):
+            detalhes = ""
+
+        resultado = _gerar_fallback(texto, tom, config_tom, contexto)
+        msg = f"\n\n⚠️ Groq indisponível (HTTPError). Usando template local."
+        if detalhes:
+            msg += f" Detalhe: {detalhes}"
+        resultado["nota"] += msg
+        return resultado
+    except (URLError, ValueError, KeyError) as e:
         resultado = _gerar_fallback(texto, tom, config_tom, contexto)
         resultado["nota"] += f"\n\n⚠️ Groq indisponível ({type(e).__name__}). Usando template local."
         return resultado

@@ -2,15 +2,18 @@
 Civitas-Radar — Spin Doctor (AI Advisor)
 =========================================
 Módulo de geração de notas estratégicas de resposta usando LLM.
-Integra com Google Gemini (google-generativeai).
+Integra com Groq (API compatível com OpenAI).
 Possui fallback local (templates) caso a API não esteja disponível.
 """
 
 from __future__ import annotations
 
+import json
 import os
 import random
 from typing import Optional
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 # ──────────────────────────────────────────────────────────────
 # Tons de resposta disponíveis
@@ -47,7 +50,7 @@ TONS_RESPOSTA = {
 
 
 # ──────────────────────────────────────────────────────────────
-# Gerador de notas via Gemini
+# Gerador de notas via Groq
 # ──────────────────────────────────────────────────────────────
 def gerar_nota_estrategica(
     texto_critico: str,
@@ -67,8 +70,8 @@ def gerar_nota_estrategica(
     contexto_politico : str, optional
         Contexto adicional (nome do político, cargo, cenário).
     api_key : str, optional
-        Chave da API Google Gemini. Se não informada, usa a variável
-        de ambiente GEMINI_API_KEY. Se nenhuma disponível, usa fallback local.
+        Chave da API Groq. Se não informada, usa a variável
+        de ambiente GROQ_API_KEY. Se nenhuma disponível, usa fallback local.
 
     Returns
     -------
@@ -76,7 +79,7 @@ def gerar_nota_estrategica(
         {
             'nota': str,           # Texto da nota gerada
             'tom': str,            # Tom utilizado
-            'fonte': str,          # 'gemini' ou 'fallback'
+            'fonte': str,          # 'groq' ou 'fallback'
             'tokens_usados': int,  # Estimativa de tokens (0 se fallback)
         }
     """
@@ -84,32 +87,26 @@ def gerar_nota_estrategica(
         tom = "Institucional"
 
     config_tom = TONS_RESPOSTA[tom]
-    chave = api_key or os.environ.get("GEMINI_API_KEY", "")
+    chave = api_key or os.environ.get("GROQ_API_KEY", "")
 
     if chave:
-        return _gerar_via_gemini(texto_critico, tom, config_tom, contexto_politico, chave)
+        return _gerar_via_groq(texto_critico, tom, config_tom, contexto_politico, chave)
     else:
         return _gerar_fallback(texto_critico, tom, config_tom, contexto_politico)
 
 
 # ──────────────────────────────────────────────────────────────
-# Integração real com Google Gemini
+# Integração real com Groq
 # ──────────────────────────────────────────────────────────────
-def _gerar_via_gemini(
+def _gerar_via_groq(
     texto: str,
     tom: str,
     config_tom: dict,
     contexto: Optional[str],
     api_key: str,
 ) -> dict:
-    """Gera nota usando a API do Google Gemini com Instrução de Sistema."""
+    """Gera nota usando a API da Groq com instrução de sistema."""
     try:
-        import google.generativeai as genai
-
-        genai.configure(api_key=api_key)
-        
-        # 1. Definimos a Instrução de Sistema (Persona)
-        # Aqui incluímos o DNA gaúcho e a expertise de Spin Doctor
         instrucao_sistema = (
             "Você é o Spin Doctor AI, um Consultor de Estratégia Política sênior e especialista em gestão de crises. "
             "Sua missão é proteger a reputação do monitorado com inteligência, ética e agilidade. "
@@ -118,15 +115,7 @@ def _gerar_via_gemini(
             "Gere textos profissionais, sem inventar dados falsos, focados em acalmar os ânimos e retomar a narrativa."
         )
 
-        # 2. Inicializamos o modelo com a instrução de sistema
-        model = genai.GenerativeModel(
-            model_name="gemini-2.0-flash",
-            system_instruction=instrucao_sistema
-        )
-
         contexto_str = f"\nContexto Adicional: {contexto}" if contexto else ""
-
-        # 3. O prompt de execução fica mais curto e direto
         prompt = (
             f"Texto crítico recebido para análise e resposta:\n\"{texto}\"\n"
             f"{contexto_str}\n\n"
@@ -134,20 +123,46 @@ def _gerar_via_gemini(
             "Não use markdown (negritos ou listas). Responda apenas com o texto da nota em português brasileiro."
         )
 
-        response = model.generate_content(prompt)
-        nota = response.text.strip() if response.text else ""
+        model = os.environ.get("GROQ_MODEL", "llama-3.1-70b-versatile")
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": instrucao_sistema},
+                {"role": "user", "content": prompt},
+            ],
+            "temperature": 0.4,
+            "max_tokens": 700,
+        }
+
+        req = Request(
+            "https://api.groq.com/openai/v1/chat/completions",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+        )
+
+        with urlopen(req, timeout=30) as response:
+            data = json.load(response)
+
+        nota = (
+            data.get("choices", [{}])[0]
+            .get("message", {})
+            .get("content", "")
+            .strip()
+        )
 
         return {
             "nota": nota,
             "tom": tom,
-            "fonte": "gemini",
-            "tokens_usados": len(prompt.split()) + len(nota.split()),
+            "fonte": "groq",
+            "tokens_usados": int(data.get("usage", {}).get("total_tokens", 0) or 0),
         }
 
-    except Exception as e:
-        # Se a API falhar, cai no fallback
+    except (HTTPError, URLError, ValueError, KeyError) as e:
         resultado = _gerar_fallback(texto, tom, config_tom, contexto)
-        resultado["nota"] += f"\n\n⚠️ Gemini indisponível ({type(e).__name__}). Usando template local."
+        resultado["nota"] += f"\n\n⚠️ Groq indisponível ({type(e).__name__}). Usando template local."
         return resultado
 
 

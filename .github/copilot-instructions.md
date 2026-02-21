@@ -21,7 +21,7 @@ O visual segue o conceito **"War Room"** (Sala de Situação), com 3 temas dinâ
 | **Faker** | Geração de dados sintéticos (locale pt_BR) |
 | **GoogleNews** | Coleta de notícias reais (com limpeza de links e normalização de datas) |
 | **TextBlob** | Análise de sentimento |
-| **Google Generative AI** | Spin Doctor via Gemini (com fallback local) |
+| **Groq LLM API** | Spin Doctor via Groq (com fallback local) |
 | **Selenium** | Keep-alive do app no Streamlit Cloud |
 
 ---
@@ -34,8 +34,8 @@ civitas-radar/
 │   └── dashboard.py              # 🎯 Dashboard Streamlit (War Room) — 3 abas + i18n + temas
 ├── src/
 │   ├── __init__.py
-│   ├── data_engine.py            # 🧠 Motor de simulação, geo e coleta (10 cenários)
-│   └── ai_advisor.py             # 🏛️ Spin Doctor (Gerador de Respostas IA via Gemini)
+│   ├── data_engine.py            # 🧠 Motor de simulação, geo e coleta (15 cenários)
+│   └── ai_advisor.py             # 🏛️ Spin Doctor (Gerador de Respostas IA via Groq)
 ├── data/                         # 📁 Dados auxiliares e cache
 ├── .github/
 │   ├── copilot-instructions.md   # 🤖 Este arquivo
@@ -86,9 +86,12 @@ Cada tema define: `bg`, `card`, `accent`, `text`, `text2`, `muted`, `border`, `p
 ## Módulos Principais
 
 ### `src/data_engine.py`
-- `CENARIOS`: dict com **10 cenários** pré-definidos (cada um com keywords positivas, negativas e neutras):
-  - Crise na Saúde, Corrupção, Inauguração, Viral Positivo
-  - Segurança Pública, Educação, Crise Habitacional, Enchente, Emergência, Calamidade Climática
+- `CENARIOS`: dict com **15 cenários** pré-definidos (cada um com keywords positivas, negativas e neutras):
+  - Crise na Saúde, Escândalo de Corrupção, Inauguração de Obra, Viral Positivo
+  - Avanço na Segurança Pública, Revolução na Educação, Crise Habitacional
+  - Crise de Produto / Serviço, Escândalo de Marca, Campanha de Alto Impacto
+  - Ciberataque e Vazamento de Dados, Crise Trabalhista, Cancelamento Digital
+  - Prêmio / Reconhecimento, Vida Pessoal em Pauta
 - `NIVEIS_GEO`: segmentação territorial hierárquica (Capital, Metropolitana, Estadual) com coordenadas reais.
 - `SimuladorRedes(nivel_geo)`: classe principal — gera DataFrames com geo-localização.
   - `gerar_comentarios()`: redes sociais com Bairro/Lat/Lon.
@@ -102,7 +105,7 @@ Cada tema define: `bg`, `card`, `accent`, `text`, `text2`, `muted`, `border`, `p
 
 ### `src/ai_advisor.py`
 - `TONS_RESPOSTA`: 3 tons (Institucional, Militância, Empático).
-- `gerar_nota_estrategica(texto, tom)`: gera nota via Gemini com fallback local.
+- `gerar_nota_estrategica(texto, tom)`: gera nota via Groq com fallback local.
 - `classificar_criticidade(texto)`: classifica criticidade (Alta/Média/Baixa).
 
 ### `app/dashboard.py`

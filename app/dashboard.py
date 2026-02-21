@@ -76,7 +76,14 @@ I18N = {
         "aprovacao": "Aprovação",
         "sentimento_regiao": "📊 Sentimento por Região (Breakdown)",
         "spin_doctor_title": "🏛️ Spin Doctor — Gerador de Respostas Estratégicas",
-        "spin_doctor_desc": "Selecione uma menção negativa e gere uma nota de resposta oficial com o tom desejado. O módulo usa IA generativa (Gemini) quando disponível.",
+        "spin_doctor_desc": "Selecione uma menção negativa ou escreva um texto manual e gere uma nota de resposta oficial com o tom desejado. O módulo usa IA generativa (Groq) quando disponível.",
+        "modo_resposta_label": "Fonte do texto",
+        "modo_opcao_selecionar": "Selecionar menção",
+        "modo_opcao_manual": "Texto manual",
+        "texto_manual_label": "✍️ Texto manual",
+        "texto_manual_placeholder": "Cole aqui um comentário, demanda da imprensa ou trecho crítico para resposta...",
+        "texto_manual_vazio": "Informe um texto para gerar a nota.",
+        "texto_manual_titulo": "Texto manual",
         "selecione_mencao": "🎯 Selecione a menção para responder",
         "mencao_selecionada": "Menção selecionada",
         "tom_resposta": "Tom da Resposta",
@@ -93,7 +100,7 @@ I18N = {
 
 **Passo a passo:**
 1. **Configure** o nome do político/monitorado na barra lateral esquerda.
-2. **Selecione** um cenário de simulação — são **10 cenários** disponíveis (Crise na Saúde, Corrupção, Inauguração, Viral Positivo, Segurança Pública, Educação, Crise Habitacional, Enchente, Estado de Emergência, Calamidade Climática).
+2. **Selecione** um cenário de simulação — são **15 cenários** disponíveis (Crise na Saúde, Escândalo de Corrupção, Inauguração de Obra, Viral Positivo, Avanço na Segurança Pública, Revolução na Educação, Crise Habitacional, Crise de Produto / Serviço, Escândalo de Marca, Campanha de Alto Impacto, Ciberataque e Vazamento de Dados, Crise Trabalhista, Cancelamento Digital, Prêmio / Reconhecimento, Vida Pessoal em Pauta).
 3. **Escolha** a escala geográfica (Capital, Região Metropolitana ou Macrorregiões).
 4. **Ajuste** o volume de menções desejado com o slider.
 5. **Clique** em "🔄 Atualizar Inteligência" para gerar os dados.
@@ -101,7 +108,9 @@ I18N = {
 **Abas disponíveis:**
 - **📡 Radar Tradicional**: KPIs, gráficos de sentimento (Donut + Timeline), Intel Imprensa (Google News em tempo real), Voz das Ruas, Rádio/TV e WhatsApp Sentinela.
 - **🗺️ Mapa de Crise**: Mapa de calor georreferenciado com sentimento por região + ranking de regiões críticas e favoráveis.
-- **🏛️ Sala de Comando**: Spin Doctor — selecione menções negativas e gere notas estratégicas por IA (Gemini ou template local) com 3 tons: Institucional, Militância e Empático.
+- **🏛️ Sala de Comando**: Spin Doctor — selecione menções negativas ou escreva um texto manual e gere notas estratégicas por IA (Groq ou template local) com 3 tons: Institucional, Militância e Empático.
+
+**Observação:** Na Sala de Comando, use o seletor **Fonte do texto** para alternar entre menções capturadas e texto manual.
 
 **Personalização:**
 - **🌐 Idioma**: Alterne entre Português (BR) e Espanhol (América Latina) no seletor acima.
@@ -161,7 +170,14 @@ I18N = {
         "aprovacao": "Aprobación",
         "sentimento_regiao": "📊 Sentimiento por Región (Desglose)",
         "spin_doctor_title": "🏛️ Spin Doctor — Generador de Respuestas Estratégicas",
-        "spin_doctor_desc": "Seleccione una mención negativa y genere una nota de respuesta oficial con el tono deseado. El módulo usa IA generativa (Gemini) cuando está disponible.",
+        "spin_doctor_desc": "Seleccione una mención negativa o escriba un texto manual y genere una nota de respuesta oficial con el tono deseado. El módulo usa IA generativa (Groq) cuando está disponible.",
+        "modo_resposta_label": "Fuente del texto",
+        "modo_opcao_selecionar": "Seleccionar mención",
+        "modo_opcao_manual": "Texto manual",
+        "texto_manual_label": "✍️ Texto manual",
+        "texto_manual_placeholder": "Pegue aqui un comentario, una demanda de prensa o un fragmento crítico para responder...",
+        "texto_manual_vazio": "Ingrese un texto para generar la nota.",
+        "texto_manual_titulo": "Texto manual",
         "selecione_mencao": "🎯 Seleccione la mención para responder",
         "mencao_selecionada": "Mención seleccionada",
         "tom_resposta": "Tono de Respuesta",
@@ -178,7 +194,7 @@ I18N = {
 
 **Paso a paso:**
 1. **Configure** el nombre del político/monitoreado en la barra lateral izquierda.
-2. **Seleccione** un escenario de simulación — hay **10 escenarios** disponibles (Crisis de Salud, Corrupción, Inauguración, Viral Positivo, Seguridad Pública, Educación, Crisis Habitacional, Inundación, Estado de Emergencia, Calamidad Climática).
+2. **Seleccione** un escenario de simulación — hay **15 escenarios** disponibles (Crisis de Salud, Escándalo de Corrupción, Inauguración de Obra, Viral Positivo, Avance en Seguridad Pública, Revolución en Educación, Crisis Habitacional, Crisis de Producto / Servicio, Escándalo de Marca, Campaña de Alto Impacto, Ciberataque y Filtración de Datos, Crisis Laboral, Cancelación Digital, Premio / Reconocimiento, Vida Personal en Pauta).
 3. **Elija** la escala geográfica (Capital, Región Metropolitana o Macrorregiones).
 4. **Ajuste** el volumen de menciones deseado con el slider.
 5. **Haga clic** en "🔄 Actualizar Inteligencia" para generar los datos.
@@ -186,7 +202,9 @@ I18N = {
 **Pestañas disponibles:**
 - **📡 Radar Tradicional**: KPIs, gráficos de sentimiento (Donut + Línea de Tiempo), Intel Prensa (Google News en tiempo real), Voz de las Calles, Radio/TV y WhatsApp Centinela.
 - **🗺️ Mapa de Crisis**: Mapa de calor georreferenciado con sentimiento por región + ranking de regiones críticas y favorables.
-- **🏛️ Sala de Comando**: Spin Doctor — seleccione menciones negativas y genere notas estratégicas por IA (Gemini o plantilla local) con 3 tonos: Institucional, Militancia y Empático.
+- **🏛️ Sala de Comando**: Spin Doctor — seleccione menciones negativas o escriba un texto manual y genere notas estratégicas por IA (Groq o plantilla local) con 3 tonos: Institucional, Militancia y Empático.
+
+**Nota:** En la Sala de Comando, use el selector **Fuente del texto** para alternar entre menciones capturadas y texto manual.
 
 **Personalización:**
 - **🌐 Idioma**: Alterne entre Portugués (BR) y Español (América Latina) en el selector superior.
@@ -1055,32 +1073,61 @@ with tab_comando:
             neg_wpp["Criticidade"] = neg_wpp["Conteúdo"].apply(classificar_criticidade)
             items_negativos = pd.concat([items_negativos, neg_wpp[["Conteúdo", "Origem", "Criticidade"]]], ignore_index=True)
 
-    if items_negativos.empty:
-        st.success(T["nenhum_negativo"])
+    texto_base = ""
+    modo_opcoes = [T["modo_opcao_selecionar"], T["modo_opcao_manual"]]
+    modo_padrao = 0 if not items_negativos.empty else 1
+    modo_resposta = st.radio(
+        T["modo_resposta_label"],
+        options=modo_opcoes,
+        index=modo_padrao,
+        horizontal=True,
+    )
+
+    if modo_resposta == T["modo_opcao_selecionar"]:
+        if items_negativos.empty:
+            st.success(T["nenhum_negativo"])
+        else:
+            opcoes = [
+                f"{row['Criticidade']} [{row['Origem']}] {row['Conteúdo'][:80]}..."
+                for _, row in items_negativos.iterrows()
+            ]
+            selecionado_idx = st.selectbox(
+                T["selecione_mencao"],
+                range(len(opcoes)),
+                format_func=lambda i: opcoes[i],
+            )
+
+            texto_selecionado = items_negativos.iloc[selecionado_idx]["Conteúdo"]
+            texto_base = str(texto_selecionado)
+            texto_sel_safe = _html.escape(texto_base)
+
+            st.markdown(
+                f"""
+                <div class="news-card" style="border-left-color:{tema_atual['accent']};">
+                    <h4 style="color:{tema_atual['accent']};">{T['mencao_selecionada']}</h4>
+                    <span style="color:{tema_atual['text_primary']}">{texto_sel_safe}</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
     else:
-        # Seletor de menção
-        opcoes = [
-            f"{row['Criticidade']} [{row['Origem']}] {row['Conteúdo'][:80]}..."
-            for _, row in items_negativos.iterrows()
-        ]
-        selecionado_idx = st.selectbox(
-            T["selecione_mencao"],
-            range(len(opcoes)),
-            format_func=lambda i: opcoes[i],
+        texto_manual = st.text_area(
+            T["texto_manual_label"],
+            placeholder=T["texto_manual_placeholder"],
+            height=120,
         )
-
-        texto_selecionado = items_negativos.iloc[selecionado_idx]["Conteúdo"]
-        texto_sel_safe = _html.escape(str(texto_selecionado))
-
-        st.markdown(
-            f"""
-            <div class="news-card" style="border-left-color:{tema_atual['accent']};">
-                <h4 style="color:{tema_atual['accent']};">{T['mencao_selecionada']}</h4>
-                <span style="color:{tema_atual['text_primary']}">{texto_sel_safe}</span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        texto_base = texto_manual.strip()
+        if texto_base:
+            texto_manual_safe = _html.escape(texto_base)
+            st.markdown(
+                f"""
+                <div class="news-card" style="border-left-color:{tema_atual['accent']};">
+                    <h4 style="color:{tema_atual['accent']};">{T['texto_manual_titulo']}</h4>
+                    <span style="color:{tema_atual['text_primary']}">{texto_manual_safe}</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
         # Controles do Spin Doctor
         col_tom, col_btn = st.columns([3, 1])
@@ -1099,41 +1146,50 @@ with tab_comando:
 
         # Geração da nota
         if gerar:
-            with st.spinner(T["spin_processando"]):
-                resultado = gerar_nota_estrategica(
-                    texto_critico=texto_selecionado,
-                    tom=tom_selecionado,
-                    contexto_politico=f"Político: {nome_politico} | Cenário: {cenario_selecionado}",
+            if not texto_base:
+                st.warning(T["texto_manual_vazio"])
+            else:
+                try:
+                    api_key = st.secrets.get("GROQ_API_KEY", "")
+                except Exception:
+                    api_key = ""
+
+                with st.spinner(T["spin_processando"]):
+                    resultado = gerar_nota_estrategica(
+                        texto_critico=texto_base,
+                        tom=tom_selecionado,
+                        contexto_politico=f"Político: {nome_politico} | Cenário: {cenario_selecionado}",
+                        api_key=api_key or None,
+                    )
+
+                emoji_tom = TONS_RESPOSTA[resultado["tom"]]["emoji"]
+                fonte_badge = "🤖 Groq" if resultado["fonte"] == "groq" else "📋 Template"
+
+                nota_safe = _html.escape(str(resultado["nota"]))
+                st.markdown(
+                    f"""
+                    <div style="background:{tema_atual['bg_card']};padding:1.2rem;border-radius:10px;
+                                border:1px solid {tema_atual['border']};margin-top:1rem;">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:0.8rem;">
+                            <span style="color:{tema_atual['accent']};font-weight:700;font-size:1rem;">
+                                {emoji_tom} {T['nota_estrategica']} {resultado['tom']}
+                            </span>
+                            <span style="color:{tema_atual['text_muted']};font-size:0.8rem;">{fonte_badge}</span>
+                        </div>
+                        <div style="color:{tema_atual['text_primary']};line-height:1.7;white-space:pre-wrap;">{nota_safe}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
                 )
 
-            emoji_tom = TONS_RESPOSTA[resultado["tom"]]["emoji"]
-            fonte_badge = "🤖 Gemini" if resultado["fonte"] == "gemini" else "📋 Template"
-
-            nota_safe = _html.escape(str(resultado['nota']))
-            st.markdown(
-                f"""
-                <div style="background:{tema_atual['bg_card']};padding:1.2rem;border-radius:10px;
-                            border:1px solid {tema_atual['border']};margin-top:1rem;">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:0.8rem;">
-                        <span style="color:{tema_atual['accent']};font-weight:700;font-size:1rem;">
-                            {emoji_tom} {T['nota_estrategica']} {resultado['tom']}
-                        </span>
-                        <span style="color:{tema_atual['text_muted']};font-size:0.8rem;">{fonte_badge}</span>
-                    </div>
-                    <div style="color:{tema_atual['text_primary']};line-height:1.7;white-space:pre-wrap;">{nota_safe}</div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-            # Ações de acompanhamento
-            col_a1, col_a2, col_a3 = st.columns(3)
-            with col_a1:
-                st.button(T["btn_copiar"], use_container_width=True)
-            with col_a2:
-                st.button(T["btn_regenerar"], use_container_width=True)
-            with col_a3:
-                st.button(T["btn_exportar"], use_container_width=True)
+                # Ações de acompanhamento
+                col_a1, col_a2, col_a3 = st.columns(3)
+                with col_a1:
+                    st.button(T["btn_copiar"], use_container_width=True)
+                with col_a2:
+                    st.button(T["btn_regenerar"], use_container_width=True)
+                with col_a3:
+                    st.button(T["btn_exportar"], use_container_width=True)
 
 # ══════════════════════════════════════════════════════════════
 # Footer Profissional

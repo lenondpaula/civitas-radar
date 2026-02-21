@@ -10,7 +10,7 @@
 
 ## 🎯 Sobre o Projeto
 
-O **Civitas-Radar** é uma plataforma de gestão de reputação e inteligência de marca para o cenário político. Funciona como uma **"War Room"** (Sala de Situação) digital, combinando simulação de redes sociais com coleta de notícias reais para monitoramento de narrativas em tempo real.
+O **Civitas-Radar** é uma plataforma de gestão de reputação e inteligência de marca para o cenário político, figuras públicas e grandes empresas. Funciona como uma **"War Room"** (Sala de Situação) digital, combinando simulação de redes sociais com coleta de notícias reais para monitoramento de narrativas em tempo real.
 
 A ferramenta permite que assessores, gestores públicos e analistas políticos acompanhem o pulso digital de figuras públicas, identifiquem crises emergentes e avaliem o impacto de ações governamentais na opinião pública.
 
@@ -20,13 +20,13 @@ A ferramenta permite que assessores, gestores públicos e analistas políticos a
 
 | Feature | Descrição |
 |---------|-----------|
-| 🧠 **10 Cenários de Simulação** | Crise na Saúde, Corrupção, Inauguração, Viral Positivo, Segurança Pública, Educação, Crise Habitacional, Enchente, Estado de Emergência, Calamidade Climática |
+| 🧠 **15 Cenários de Simulação** | Crise na Saúde, Escândalo de Corrupção, Inauguração de Obra, Viral Positivo, Avanço na Segurança Pública, Revolução na Educação, Crise Habitacional, Crise de Produto / Serviço, Escândalo de Marca, Campanha de Alto Impacto, Ciberataque e Vazamento de Dados, Crise Trabalhista, Cancelamento Digital, Prêmio / Reconhecimento, Vida Pessoal em Pauta |
 | 📰 **Notícias Reais** | Integração com Google News — links limpos (sem `&ved`, `&usg`, `#google_vignette`) e datas normalizadas |
 | 📊 **Gráficos Interativos** | Donut Chart de sentimentos + Timeline de evolução + Barras por região |
 | 🗺️ **Geo-Inteligência** | Mapa de calor (density_mapbox) com segmentação territorial: Capital, Metropolitana, Estadual |
 | 🟢🔴 **Análise de Sentimento** | Classificação automática: Positivo, Negativo, Neutro |
 | 📻 **Omni-Channel** | Redes Sociais + Rádio/TV Clipping + WhatsApp Sentinela (Dark Social) |
-| 🏛️ **Spin Doctor (IA)** | Geração de notas estratégicas via Gemini (com fallback local) em 3 tons: Institucional, Militância, Empático |
+| 🏛️ **Spin Doctor (IA)** | Geração de notas estratégicas via Groq (com fallback local) em 3 tons: Institucional, Militância, Empático |
 | 🌐 **Bilíngue (i18n)** | Interface completa em Português (BR) e Espanhol (América Latina) |
 | 🎨 **3 Temas Visuais** | Dark (azul marinho/grafite), Grey (purple-grey), Light (branco/azul) — CSS dinâmico |
 | 📈 **KPIs em Tempo Real** | Índice de Aprovação Digital, Volume de Menções, Sentimento Predominante |
@@ -75,7 +75,7 @@ O arquivo `keep_alive.py` mantém a aplicação ativa no Streamlit Cloud via Sel
 | **Faker** | Geração de dados sintéticos (pt_BR) |
 | **GoogleNews** | Coleta de notícias reais |
 | **TextBlob** | Análise de sentimento NLP |
-| **Google Generative AI** | Spin Doctor via Gemini (com fallback local) |
+| **Groq LLM API** | Spin Doctor via Groq (com fallback local) |
 | **Selenium** | Keep-alive do app no Streamlit Cloud |
 | **Python 3.10+** | Linguagem base |
 
@@ -89,8 +89,8 @@ civitas-radar/
 │   └── dashboard.py              # 🎯 Dashboard Streamlit (War Room) — 3 abas + i18n + temas
 ├── src/
 │   ├── __init__.py
-│   ├── data_engine.py            # 🧠 Motor de simulação, geo e coleta de dados (10 cenários)
-│   └── ai_advisor.py             # 🏛️ Spin Doctor (Gerador de Respostas IA via Gemini)
+│   ├── data_engine.py            # 🧠 Motor de simulação, geo e coleta de dados (15 cenários)
+│   └── ai_advisor.py             # 🏛️ Spin Doctor (Gerador de Respostas IA via Groq)
 ├── data/                         # 📁 Dados auxiliares e cache
 ├── .github/
 │   ├── copilot-instructions.md   # 🤖 Instruções para agentes de IA
@@ -105,7 +105,7 @@ civitas-radar/
 
 ## 📡 Cenários de Simulação
 
-### Cenários Originais
+### Lista atualizada (15 cenários)
 
 | Cenário | Perfil | Sentimento Dominante |
 |---------|--------|---------------------|
@@ -113,17 +113,17 @@ civitas-radar/
 | 💰 **Escândalo de Corrupção** | Crise severa | ~90% negativo |
 | 🏗️ **Inauguração de Obra** | Oportunidade positiva | ~70% positivo |
 | 🌟 **Viral Positivo** | Narrativa favorável | ~95% positivo |
-
-### Cenários Novos
-
-| Cenário | Perfil | Sentimento Dominante |
-|---------|--------|---------------------|
 | 🛡️ **Avanço na Segurança Pública** | Positivo | ~75% positivo |
 | 📚 **Revolução na Educação** | Positivo | ~75% positivo |
 | 🏠 **Crise Habitacional** | Negativo | ~82% negativo |
-| 🌊 **Enchente / Inundação** | Tragédia climática | ~75% negativo |
-| 🚨 **Estado de Emergência** | Emergência | ~70% negativo |
-| 🌪️ **Calamidade Climática** | Calamidade pública | ~72% negativo |
+| 🧪 **Crise de Produto / Serviço** | Crise operacional | ~70% negativo |
+| 🧯 **Escândalo de Marca** | Reputação em risco | ~75% negativo |
+| 🚀 **Campanha de Alto Impacto** | Oportunidade | ~60% positivo |
+| 🧠 **Ciberataque e Vazamento de Dados** | Crise crítica | ~80% negativo |
+| 🧰 **Crise Trabalhista** | Crise interna | ~70% negativo |
+| 📵 **Cancelamento Digital** | Crise reputacional | ~75% negativo |
+| 🏆 **Prêmio / Reconhecimento** | Narrativa favorável | ~70% positivo |
+| 👥 **Vida Pessoal em Pauta** | Exposição pública | ~55% negativo |
 
 Cada cenário possui **20-26 keywords realistas** por categoria de sentimento, gerando comentários contextualizados com hashtags, emojis e menções.
 
@@ -156,13 +156,23 @@ Todos os rótulos, KPIs, abas, botões, mensagens e o menu "Como usar" são trad
 
 O módulo de geração de respostas estratégicas permite:
 
-1. Selecionar menções negativas de qualquer canal (Redes Sociais, Rádio/TV, WhatsApp)
+1. Selecionar menções negativas de qualquer canal (Redes Sociais, Rádio/TV, WhatsApp) **ou** inserir um texto manual
 2. Classificar a criticidade automaticamente (🔴 Alta / 🟡 Média / 🟢 Baixa)
 3. Gerar nota oficial em 3 tons:
    - **Institucional** — formal, técnico, governamental
    - **Militância** — mobilizador, assertivo, contra-ataque
    - **Empático** — acolhedor, humano, próximo do cidadão
-4. Fonte: Google Gemini (quando API configurada) ou template local
+4. Fonte: Groq (quando API configurada) ou template local
+
+### Configuração da API (Groq)
+
+No Streamlit Cloud, adicione a chave em **Secrets**:
+
+```toml
+GROQ_API_KEY = "sua-chave-aqui"
+```
+
+Localmente, também é possível definir a variável de ambiente `GROQ_API_KEY`.
 
 ---
 
